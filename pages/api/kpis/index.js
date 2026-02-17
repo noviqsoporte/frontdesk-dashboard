@@ -1,8 +1,15 @@
 import { tablas, fetchRecords } from '../../../lib/airtable';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
-import { TZDate } from 'date-fns-tz';
 
-const TIMEZONE = 'America/Mexico_City';
+// Get current date in Mexico City timezone
+function getNowMexico() {
+  const now = new Date();
+  // Format in Mexico timezone to get the correct date string
+  const mexicoDateStr = now.toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
+  // en-CA gives yyyy-MM-dd format
+  // Create a date object at noon to avoid any day-boundary issues
+  return new Date(mexicoDateStr + 'T12:00:00');
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -10,7 +17,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const now = new TZDate(new Date(), TIMEZONE);
+    const now = getNowMexico();
     const hoy = format(now, 'yyyy-MM-dd');
     const weekStart = format(startOfWeek(now, { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const weekEnd = format(endOfWeek(now, { weekStartsOn: 1 }), 'yyyy-MM-dd');

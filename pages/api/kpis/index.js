@@ -1,5 +1,8 @@
 import { tablas, fetchRecords } from '../../../lib/airtable';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
+import { TZDate } from 'date-fns-tz';
+
+const TIMEZONE = 'America/Mexico_City';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -7,7 +10,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const now = new Date();
+    const now = new TZDate(new Date(), TIMEZONE);
     const hoy = format(now, 'yyyy-MM-dd');
     const weekStart = format(startOfWeek(now, { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const weekEnd = format(endOfWeek(now, { weekStartsOn: 1 }), 'yyyy-MM-dd');

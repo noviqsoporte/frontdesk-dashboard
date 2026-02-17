@@ -84,7 +84,6 @@ async function handlePatch(req, res) {
     return res.status(400).json({ error: 'ID es requerido' });
   }
 
-  // Only allow updating specific fields
   const allowedFields = ['estado', 'nombre_cliente', 'fecha', 'hora', 'num_personas', 'notas_especiales'];
   const updateFields = {};
 

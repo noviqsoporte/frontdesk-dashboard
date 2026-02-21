@@ -208,39 +208,53 @@ export default function Reservas() {
                               >
                                 <Eye className="h-4 w-4" />
                               </button>
-                              {r.estado === 'confirmada' && (
-                                <>
-                                  <button
-                                    className="btn-ghost text-xs text-emerald-600"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      cambiarEstado(r.id, 'completada');
-                                    }}
-                                    title="Marcar completada"
-                                  >
-                                    ✓
-                                  </button>
-                                  <button
-                                    className="btn-ghost text-xs text-red-600"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      cambiarEstado(r.id, 'cancelada');
-                                    }}
-                                    title="Cancelar"
-                                  >
-                                    ✗
-                                  </button>
-                                  <button
-                                    className="btn-ghost text-xs text-amber-600"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      cambiarEstado(r.id, 'no_show');
-                                    }}
-                                    title="No Show"
-                                  >
-                                    NS
-                                  </button>
-                                </>
+                              {r.estado !== 'confirmada' && (
+                                <button
+                                  className="btn-ghost text-xs text-brand-600"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    cambiarEstado(r.id, 'confirmada');
+                                  }}
+                                  title="Confirmar"
+                                >
+                                  ↩
+                                </button>
+                              )}
+                              {r.estado !== 'completada' && (
+                                <button
+                                  className="btn-ghost text-xs text-emerald-600"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    cambiarEstado(r.id, 'completada');
+                                  }}
+                                  title="Marcar completada"
+                                >
+                                  ✓
+                                </button>
+                              )}
+                              {r.estado !== 'cancelada' && (
+                                <button
+                                  className="btn-ghost text-xs text-red-600"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    cambiarEstado(r.id, 'cancelada');
+                                  }}
+                                  title="Cancelar"
+                                >
+                                  ✗
+                                </button>
+                              )}
+                              {r.estado !== 'no_show' && (
+                                <button
+                                  className="btn-ghost text-xs text-amber-600"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    cambiarEstado(r.id, 'no_show');
+                                  }}
+                                  title="No Show"
+                                >
+                                  NS
+                                </button>
                               )}
                             </div>
                           </td>
@@ -326,28 +340,40 @@ function ReservaDetail({ reserva, onClose, onCambiarEstado }) {
           )}
         </div>
 
-        {reserva.estado === 'confirmada' && (
-          <div className="flex gap-2 mt-6 pt-4 border-t border-gray-100">
+        <div className="flex gap-2 mt-6 pt-4 border-t border-gray-100">
+          {reserva.estado !== 'confirmada' && (
+            <button
+              className="btn-secondary flex-1 text-sm"
+              onClick={() => onCambiarEstado(reserva.id, 'confirmada')}
+            >
+              ↩ Confirmar
+            </button>
+          )}
+          {reserva.estado !== 'completada' && (
             <button
               className="btn-primary flex-1 text-sm"
               onClick={() => onCambiarEstado(reserva.id, 'completada')}
             >
               ✓ Completada
             </button>
+          )}
+          {reserva.estado !== 'cancelada' && (
             <button
               className="btn-danger flex-1 text-sm"
               onClick={() => onCambiarEstado(reserva.id, 'cancelada')}
             >
               ✗ Cancelar
             </button>
+          )}
+          {reserva.estado !== 'no_show' && (
             <button
               className="btn-secondary flex-1 text-sm"
               onClick={() => onCambiarEstado(reserva.id, 'no_show')}
             >
               No Show
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

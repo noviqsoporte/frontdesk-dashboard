@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { LayoutDashboard, CalendarDays, Megaphone, Menu, X } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, Megaphone, Users, Menu, X } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Reservas', href: '/reservas', icon: CalendarDays },
+  { name: 'Contactos', href: '/contactos', icon: Users },
   { name: 'Promociones', href: '/promociones', icon: Megaphone },
 ];
 

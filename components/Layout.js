@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { LayoutDashboard, CalendarDays, Megaphone, Users, Menu, X } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, Megaphone, Users, Menu, X, Settings } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Reservas', href: '/reservas', icon: CalendarDays },
   { name: 'Contactos', href: '/contactos', icon: Users },
-  { name: 'Promociones', href: '/promociones', icon: Megaphone },
+  { name: 'Promociones', href: '/promociones', icon: Megaphone, comingSoon: true },
+  { name: 'Configuración', href: '/configuracion', icon: Settings },
 ];
 
 export default function Layout({ children }) {
@@ -41,6 +42,25 @@ export default function Layout({ children }) {
         <nav className="mt-6 px-3 space-y-1">
           {navigation.map((item) => {
             const isActive = router.pathname === item.href;
+
+            // Coming soon items are rendered as disabled
+            if (item.comingSoon) {
+              return (
+                <div
+                  key={item.name}
+                  className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-400 cursor-default select-none"
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon className="h-5 w-5 text-gray-300" />
+                    {item.name}
+                  </div>
+                  <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-semibold text-gray-400 leading-tight">
+                    Pronto
+                  </span>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={item.name}
